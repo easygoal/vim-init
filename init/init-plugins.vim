@@ -201,9 +201,9 @@ if index(g:bundle_group, 'tags') >= 0
 	let g:gutentags_modules = [] 
 
 	" 如果有 ctags 可执行就允许动态生成 ctags 文件
-	if executable('ctags')
-		let g:gutentags_modules += ['ctags']
-	endif
+	"if executable('ctags')
+	"	let g:gutentags_modules += ['ctags']
+	"endif
 
 	" 如果有 gtags 可执行就允许动态生成 gtags 数据库
 	if executable('gtags') && executable('gtags-cscope')
@@ -286,19 +286,33 @@ endif
 if index(g:bundle_group, 'airline') >= 0
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-	let g:airline_left_sep = ''
-	let g:airline_left_alt_sep = ''
-	let g:airline_right_sep = ''
-	let g:airline_right_alt_sep = ''
-	let g:airline_powerline_fonts = 0
+    " add symbols dictionary
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+    " powerline symbols
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.colnr = ' ℅:'
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = ' :'
+    let g:airline_symbols.maxlinenr = '☰ '
+    let g:airline_symbols.dirty='⚡'
+	let g:airline_powerline_fonts = 1
 	let g:airline_exclude_preview = 1
-	let g:airline_section_b = '%n'
+	"let g:airline_section_b = '%n'
 	let g:airline_theme='deus'
-	let g:airline#extensions#branch#enabled = 0
+	let g:airline#extensions#branch#enabled = 1
 	let g:airline#extensions#syntastic#enabled = 0
-	let g:airline#extensions#fugitiveline#enabled = 0
+	let g:airline#extensions#fugitiveline#enabled = 1
 	let g:airline#extensions#csv#enabled = 0
 	let g:airline#extensions#vimagit#enabled = 0
+    let g:airline#extensions#tabline#enabled = 1
+	let g:ariline#extensions#tabline#show_buffers = 1
+    let g:airline#extensions#tabline#show_splits = 1
 endif
 
 
@@ -311,10 +325,10 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	let g:NERDTreeMinimalUI = 1
 	let g:NERDTreeDirArrows = 1
 	let g:NERDTreeHijackNetrw = 0
-	noremap <space>nn :NERDTree<cr>
+	"noremap <space>nn :NERDTree<cr>
 	noremap <space>no :NERDTreeFocus<cr>
 	noremap <space>nm :NERDTreeMirror<cr>
-	noremap <space>nt :NERDTreeToggle<cr>
+	noremap <space>nn :NERDTreeToggle<cr>
 	noremap <space>nb :NERDTreeFind<cr>
 endif
 
@@ -448,7 +462,7 @@ if index(g:bundle_group, 'leaderf') >= 0
 		" ui 定制
 		let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
-		" 如何识别项目目录，从当前文件目录向父目录递归知道碰到下面的文件/目录
+		" 如何识别项目目录，从当前文件目录向父目录递归直到碰到下面的文件/目录
 		let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 		let g:Lf_WorkingDirectoryMode = 'Ac'
 		let g:Lf_WindowHeight = 0.30
